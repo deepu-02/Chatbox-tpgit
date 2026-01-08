@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TPGIT AI ChatBot</title>
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#e6f0ff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh
+}
+.app-container{
+  width:100%;
+  max-width:500px;
+  height:95vh;
+  background:white;
+  border-radius:15px;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 0 20px rgba(0,0,0,.2)
+}
+.header{
+  background:#202123;
+  color:white;
+  padding:15px;
+  text-align:center;
+  font-weight:bold
+}
+.chat-area{
+  flex:1;
+  padding:15px;
+  overflow-y:auto;
+  background:#f7f7f8
+}
+.message{
+  display:flex;
+  margin-bottom:15px
+}
+.user-message{
+  flex-direction:row-reverse
+}
+.avatar{
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:12px;
+  margin:0 8px
+}
+.user-avatar{background:#19c37d}
+.ai-avatar{background:#0d8c6c}
+.text-bubble{
+  max-width:75%;
+  padding:12px;
+  border-radius:15px;
+  font-size:14px
+}
+.user-bubble{
+  background:#19c37d;
+  color:white;
+  border-bottom-right-radius:5px
+}
+.ai-bubble{
+  background:white;
+  border:1px solid #ddd;
+  border-bottom-left-radius:5px
+}
+.input-container{
+  padding:12px;
+  display:flex;
+  gap:10px;
+  border-top:1px solid #ddd
+}
+#messageInput{
+  flex:1;
+  padding:12px;
+  border-radius:12px;
+  border:2px solid #ddd
+}
+#sendButton{
+  width:45px;
+  height:45px;
+  border:none;
+  border-radius:50%;
+  background:#19c37d;
+  color:white;
+  font-size:18px
+}
+</style>
+</head>
+
+<body>
+<div class="app-container">
+  <div class="header">🤖 TPGIT AI ChatBot</div>
+  <div class="chat-area" id="chat"></div>
+
+  <div class="input-container">
+    <input id="messageInput" placeholder="Ask something...">
+    <button id="sendButton">➤</button>
+  </div>
+</div>
+
+<script>
+const chat=document.getElementById("chat");
+const input=document.getElementById("messageInput");
+const btn=document.getElementById("sendButton");
+
+function add(role,text){
+  const msg=document.createElement("div");
+  msg.className="message "+(role==="user"?"user-message":"");
+  msg.innerHTML=`
+    <div class="avatar ${role==="user"?"user-avatar":"ai-avatar"}">${role==="user"?"U":"AI"}</div>
+    <div class="text-bubble ${role==="user"?"user-bubble":"ai-bubble"}">${text}</div>`;
+  chat.appendChild(msg);
+  chat.scrollTop=chat.scrollHeight;
+}
+
+btn.onclick=send;
+input.onkeypress=e=>{if(e.key==="Enter")send();};
+
+function send(){
+  const q=input.value.toLowerCase().trim();
+  if(!q) return;
+  add("user",q);
+  input.value="";
+  setTimeout(()=>add("ai",getAnswer(q)),400);
+}
+
+function getAnswer(q){
+
+/* Greetings */
+if(q.match(/hi|hello|hey/))
+  return "Hello 👋 Welcome to TPGIT AI ChatBot. How can I help you?";
+
+if(q.match(/good morning/))
+  return "Good morning 🌞 How can I assist you today?";
+
+if(q.match(/good afternoon/))
+  return "Good afternoon 😊 Feel free to ask your questions.";
+
+if(q.match(/good evening/))
+  return "Good evening 🌆 How can I help you?";
+
+if(q.match(/thank you|thanks/))
+  return "You're welcome 🙂 Happy to help!";
+
+/* College Information */
+if(q.match(/tpgit|about/))
+  return "Thanthai Periyar Government Institute of Technology is a government engineering college.";
+
+if(q.match(/establish|year/))
+  return "TPGIT was established in the year 1990.";
+
+if(q.match(/location|where/))
+  return "TPGIT is located at Bagayam, Vellore.";
+
+if(q.match(/address/))
+  return "TPGIT, Bagayam, Vellore – 632002.";
+
+if(q.match(/affiliat/))
+  return "TPGIT is affiliated to Anna University, Chennai.";
+
+if(q.match(/govern|dote/))
+  return "TPGIT is under Directorate of Technical Education, Tamil Nadu.";
+
+/* Working Time */
+if(q.match(/working|time|hours/))
+  return "College working hours are 9 AM to 5 PM, Monday to Friday.";
+
+/* Admission */
+if(q.match(/admission|join/))
+  return "Admissions are done through Anna University counselling.";
+
+if(q.match(/eligibility/))
+  return "Candidates must pass 12th with Maths, Physics and Chemistry.";
+
+if(q.match(/application|apply/))
+  return "Application is through online counselling only.";
+
+if(q.match(/reservation|7.5/))
+  return "7.5 percent reservation students do not have to pay college fees.";
+
+/* Courses */
+if(q.match(/ug|undergraduate/))
+  return "UG courses include B.E. CSE, ECE, EEE, Mechanical, Civil and Robotics.";
+
+if(q.match(/pg|postgraduate/))
+  return "PG courses include M.E. Applied Electronics, Manufacturing and Structural.";
+
+if(q.match(/mca/))
+  return "MCA course is available.";
+
+if(q.match(/part/))
+  return "Part-time engineering courses are available.";
+
+if(q.match(/robot/))
+  return "Robotics engineering course is available at UG level.";
+
+/* College Fees */
+if(q.match(/college fee|fees/))
+  return "College Fees (Year-wise): 1st Year Rs.10,300 | 2nd Year Rs.6,480 | 3rd Year Rs.4,480 | 4th Year Rs.4,480";
+
+/* Mess Fees */
+if(q.match(/mess/))
+  return "Mess fees are approximately Rs.2,500 per month.";
+
+/* Academic */
+if(q.match(/calendar|semester/))
+  return "Semester system is followed as per Anna University academic calendar.";
+
+if(q.match(/exam/))
+  return "Examinations are conducted as per Anna University schedule.";
+
+if(q.match(/result/))
+  return "Results are published on the Anna University website.";
+
+/* Facilities */
+if(q.match(/library/))
+  return "Library is open from 9 AM to 5 PM on working days.";
+
+if(q.match(/lab/))
+  return "Well equipped laboratories are available for all departments.";
+
+if(q.match(/wifi/))
+  return "Campus has WiFi facility for students.";
+
+if(q.match(/facilities/))
+  return "Campus facilities include library, hostel, labs and sports ground.";
+
+/* Hostel */
+if(q.match(/hostel fee/))
+  return "Hostel Fee: 1st Year Rs.14,000 (includes Rs.5,000 refundable). From 2nd year Rs.9,550 per year.";
+
+if(q.match(/hostel/))
+  return "Hostel facility is available for both boys and girls.";
+
+/* Placement */
+if(q.match(/placement/))
+  return "TPGIT has good placement support.";
+
+if(q.match(/highest/))
+  return "Highest package offered is around Rs.8 LPA.";
+
+if(q.match(/average/))
+  return "Average package is around Rs.4 to 5 LPA.";
+
+if(q.match(/company/))
+  return "Companies include TVS, Yamaha and QSpiders.";
+
+/* Student Life */
+if(q.match(/sports/))
+  return "Sports facilities are available for indoor and outdoor games.";
+
+if(q.match(/event/))
+  return "Cultural and technical events are conducted every year.";
+
+if(q.match(/faculty/))
+  return "College has experienced and qualified faculty members.";
+
+if(q.match(/campus/))
+  return "College has a green and peaceful campus environment.";
+
+if(q.match(/safety|security/))
+  return "Campus is secured with security staff and CCTV surveillance.";
+
+if(q.match(/ragging/))
+  return "Anti-ragging committee is available to ensure student safety.";
+
+/* Support */
+if(q.match(/scholarship/))
+  return "Government scholarships are available for eligible students.";
+
+if(q.match(/canteen/))
+  return "Hygienic canteen facility is available inside the campus.";
+
+if(q.match(/medical/))
+  return "Basic medical and first aid facilities are available.";
+
+/* Contact */
+if(q.match(/contact|phone|help/))
+  return "Help desk assistance is available during working hours. Contact: 0416-2267762.";
+
+return "Sorry, I couldn't understand. Please ask about admission, courses, fees, hostel or placement.";
+}
+</script>
+</body>
+</html>
